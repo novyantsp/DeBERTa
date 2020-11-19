@@ -52,7 +52,7 @@ def _setup_distributed_group(args):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
   else:
     set_logger(args.task_name, os.path.join(args.output_dir, f'training_{args.task_name}_{args.rank}.log'), rank=args.rank, verbose=1 if args.local_rank==0 else 0)
-    device_id = args.rank % args.n_gpu
+    device_id = args.rank % args.n_gpu if args.n_gpu > 0 else 0
     if args.local_rank >= 0:
       device_id = args.local_rank
     device = torch.device("cuda", device_id)
