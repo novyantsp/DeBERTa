@@ -546,7 +546,8 @@ class QQPTask(DataTask):
     input_src = os.path.join(self.data_dir, 'train.tsv')
     assert os.path.exists(input_src), f"{input_src} doesn't exists"
     data = self._read_tsv(input_src)
-    examples = ExampleSet([ExampleInstance((l[3], l[4]), self.label2id(l[5])) for l in data[1:] if len(l)==6]) # if l[3] in ['slate']])
+    # examples = ExampleSet([ExampleInstance((l[3], l[4]), self.label2id(l[5])) for l in data[1:] if len(l)==6]) # if l[3] in ['slate']])
+    examples = ExampleSet([ExampleInstance((l[0], l[1]), self.label2id(l[2])) for l in data[1:] if len(l)==3])
     if dataset_size is None:
       dataset_size = len(examples)*epochs
     return DynamicDataset(examples, feature_fn = self.get_feature_fn(max_seq_len=max_seq_len, mask_gen=mask_gen), \
@@ -583,9 +584,11 @@ dataset_size = dataset_size, shuffle=True, **kwargs)
     data = self._read_tsv(input_src)
     predict_fn = self.get_predict_fn()
     if type_name=='test':
-      examples = ExampleSet([ExampleInstance((l[-2], l[-1])) for l in data[1:]])
+      # examples = ExampleSet([ExampleInstance((l[-2], l[-1])) for l in data[1:]])
+      examples = ExampleSet([ExampleInstance((l[0], l[1])) for l in data[1:]])
     else:
-      examples = ExampleSet([ExampleInstance((l[3], l[4]), self.label2id(l[5])) for l in data[1:] if len(l)==6])
+      # examples = ExampleSet([ExampleInstance((l[3], l[4]), self.label2id(l[5])) for l in data[1:] if len(l)==6])
+      examples = ExampleSet([ExampleInstance((l[0], l[1]), self.label2id(l[2])) for l in data[1:] if len(l)==3])
 
     return EvalData(name, examples,
       metrics_fn = self.get_metrics_fn(), predict_fn = predict_fn)
