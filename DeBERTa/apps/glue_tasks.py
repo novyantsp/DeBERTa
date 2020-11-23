@@ -585,7 +585,8 @@ dataset_size = dataset_size, shuffle=True, **kwargs)
     predict_fn = self.get_predict_fn()
     if type_name=='test':
       # examples = ExampleSet([ExampleInstance((l[-2], l[-1])) for l in data[1:]])
-      examples = ExampleSet([ExampleInstance((l[0], l[1])) for l in data[1:]])
+      # examples = ExampleSet([ExampleInstance((l[0], l[1])) for l in data[1:]])
+      examples = ExampleSet([ExampleInstance((l[0], l[1]), self.label2id(l[2])) for l in data[1:] if len(l)==3])
     else:
       # examples = ExampleSet([ExampleInstance((l[3], l[4]), self.label2id(l[5])) for l in data[1:] if len(l)==6])
       examples = ExampleSet([ExampleInstance((l[0], l[1]), self.label2id(l[2])) for l in data[1:] if len(l)==3])
