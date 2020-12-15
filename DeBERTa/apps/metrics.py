@@ -16,7 +16,7 @@ def metric_accuracy(logits, labels):
 
 def metric_f1(logits, labels):
   predicts = np.argmax(logits, axis=1)
-  return f1_score(labels, predicts)
+  return f1_score(labels, predicts, average='macro')
 
 def metric_macro_f1(logits, ground_truth, labels=[0,1]):
   predicts = np.argmax(logits, axis=1)

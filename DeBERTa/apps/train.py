@@ -425,7 +425,7 @@ def build_argument_parser():
 
   parser.add_argument('--workers',
             type=int,
-            default=2,
+            default=1,
             help="The workers to load data.")
 
   parser.add_argument('--debug',

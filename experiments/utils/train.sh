@@ -103,7 +103,7 @@ fi
 cp -f $CONFIG $OUTPUT/model_config.json
 
 if [[ ! ${Predict,,} = 'true' ]]; then
-  CMD=" --do_train"
+  CMD=" --do_train --do_eval --do_predict"
 else
   CMD="--do_eval --do_predict" 
 fi
